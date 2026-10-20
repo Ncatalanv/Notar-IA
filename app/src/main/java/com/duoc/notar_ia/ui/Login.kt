@@ -14,6 +14,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.duoc.notar_ia.R
 import com.duoc.notar_ia.ui.theme.NotariaTheme
+import com.duoc.notar_ia.ui.theme.Dorado
 
 @Composable
 fun Login(){
@@ -36,6 +38,13 @@ fun Login(){
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var modal by remember { mutableStateOf(false) }
+
+    // Colores compartidos por los campos del formulario
+    val coloresCampos = OutlinedTextFieldDefaults.colors(
+        unfocusedBorderColor = Dorado.copy(alpha = 0.5f),
+        unfocusedLabelColor = Dorado.copy(alpha = 0.7f)
+
+    )
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -74,6 +83,7 @@ fun Login(){
                         username = nuevoTexto
                     },
                     label = { Text("Introduce tu nombre") },
+                    colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -85,6 +95,7 @@ fun Login(){
                         password = nuevoTexto
                     },
                     label = { Text("Introduce tu contraseña") },
+                    colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
 
