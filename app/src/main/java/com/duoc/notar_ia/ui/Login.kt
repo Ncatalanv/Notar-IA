@@ -115,7 +115,7 @@ fun Login(){
                 if (modal) {
                     AlertDialog(
                         onDismissRequest = { modal = false },
-                        title = { Text("Mensaje") },
+                        title = { Text("Mensaje", color = MaterialTheme.colorScheme.primary) },
                         text = { Text("Se debe crear el usuario: $username con la contraseña:$password") },
                         confirmButton = {
                             Button(onClick = { modal = false }) {
