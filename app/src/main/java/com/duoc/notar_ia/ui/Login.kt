@@ -68,8 +68,6 @@ fun Login(){
 
                 Spacer(Modifier.height(48.dp))
 
-                Text(text = "Nombre")
-
                 OutlinedTextField(
                     value = username,
                     onValueChange = { nuevoTexto ->
@@ -80,8 +78,6 @@ fun Login(){
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-                Text(text = "Contraseña")
 
                 OutlinedTextField(
                     value = password,
