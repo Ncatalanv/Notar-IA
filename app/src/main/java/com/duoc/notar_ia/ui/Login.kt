@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.duoc.notar_ia.R
 import com.duoc.notar_ia.ui.theme.NotariaTheme
 import com.duoc.notar_ia.ui.theme.Dorado
+import com.duoc.notar_ia.ui.theme.GrisMedio
 
 @Composable
 fun Login(){
@@ -43,8 +44,9 @@ fun Login(){
     // Colores compartidos por los campos del formulario
     val coloresCampos = OutlinedTextFieldDefaults.colors(
         unfocusedBorderColor = Dorado.copy(alpha = 0.5f),
-        unfocusedLabelColor = Dorado.copy(alpha = 0.7f)
-
+        unfocusedLabelColor = Dorado.copy(alpha = 0.7f),
+        focusedContainerColor = GrisMedio,
+        unfocusedContainerColor = GrisMedio
     )
 
     Surface(
