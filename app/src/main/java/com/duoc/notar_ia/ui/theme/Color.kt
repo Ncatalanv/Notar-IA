@@ -14,3 +14,6 @@ val Pink40 = Color(0xFF7D5260)
 val Dorado = Color(0xFFD4AF6A)
 val FondoOscuro = Color(0xFF0B0B0D)
 val GrisMedio = Color(0xFF1C1C1E)
+
+//Texto principal sobre los fondos oscuros
+val TextoClaro = Color(0xFFEAE6DF)

@@ -3,6 +3,7 @@ package com.duoc.notar_ia.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.darkColorScheme
@@ -15,9 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 //Esquema de colores con los colores principales de NotariaX
 private val AppColorScheme = darkColorScheme(
     background = FondoOscuro,
-    surface = FondoOscuro,
-    onBackground = Dorado,
-    onSurface = Dorado,
+    surface = GrisMedio,  // superficies secundarias (diàlogos o tarjetas)
+    onBackground = TextoClaro,  // texto sobre el fondo
+    onSurface = TextoClaro,  //texto sobre las superficies
     primary = Dorado,
     onPrimary = FondoOscuro
 )
