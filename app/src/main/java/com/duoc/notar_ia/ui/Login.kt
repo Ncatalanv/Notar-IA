@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.duoc.notar_ia.R
 
@@ -53,14 +54,17 @@ fun Login(){
                         painter = painterResource(id = R.drawable.logo_notar_ia),
                         contentDescription = "Logo de Notar-IA",
                         modifier = Modifier
-                            .width(400.dp)
-                            .height(325.dp)
+                            .width(220.dp)
+                            .height(180.dp)
                     )
+
+                    Spacer(Modifier.height(8.dp))
 
                     Text(
                         text = "Documentos notariales con validez legal desde tu celular",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onBackground
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center       //Centrar el slogan
                     )
                 }
                 Spacer(Modifier.height(48.dp))
