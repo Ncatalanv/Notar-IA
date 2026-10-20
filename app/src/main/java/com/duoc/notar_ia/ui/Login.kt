@@ -11,8 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -46,7 +50,9 @@ fun Login(){
         unfocusedBorderColor = Dorado.copy(alpha = 0.5f),
         unfocusedLabelColor = Dorado.copy(alpha = 0.7f),
         focusedContainerColor = GrisMedio,
-        unfocusedContainerColor = GrisMedio
+        unfocusedContainerColor = GrisMedio,
+        focusedLeadingIconColor = Dorado,
+        unfocusedLeadingIconColor = Dorado.copy(alpha = 0.7f)
     )
 
     Surface(
@@ -86,6 +92,12 @@ fun Login(){
                         username = nuevoTexto
                     },
                     label = { Text("Introduce tu nombre") },
+                    leadingIcon = {
+                        Icon(  //Icono de usuario en campo de nombre
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Icono de usuario"
+                        )
+                    },
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -98,6 +110,12 @@ fun Login(){
                         password = nuevoTexto
                     },
                     label = { Text("Introduce tu contraseña") },
+                    leadingIcon = {  //leadingIcon --> icono al inicio (izquierda)
+                        Icon(  //Icono de candado para campo de contraseña
+                            imageVector = Icons.Filled.Lock,
+                            contentDescription = "Icono de candado"
+                        )
+                    },
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
