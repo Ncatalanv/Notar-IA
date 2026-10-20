@@ -36,10 +36,10 @@
 ## 🔨 Lista: En progreso
 
 ### Pulir el diseño del Login (A) `🎨 Diseño`
-- [ ] Frase pegada al logo y separada del formulario
-- [ ] Estilos de campos, botón y diálogo con el tema
-- [ ] Usar `GrisMedio` en campos y superficies secundarias
-- [ ] Campo de contraseña con teclado tipo password e íconos
+- [x] Frase pegada al logo y separada del formulario
+- [x] Estilos de campos, botón y diálogo con el tema
+- [x] Usar `GrisMedio` en campos y superficies secundarias
+- [x] Campo de contraseña con teclado tipo password e íconos
 
 ---
 
