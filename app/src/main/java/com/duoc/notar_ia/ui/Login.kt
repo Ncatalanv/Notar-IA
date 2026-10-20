@@ -47,9 +47,6 @@ fun Login(){
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
                     Image(
                         painter = painterResource(id = R.drawable.logo_notar_ia),
                         contentDescription = "Logo de Notar-IA",
@@ -66,7 +63,7 @@ fun Login(){
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center       //Centrar el slogan
                     )
-                }
+
                 Spacer(Modifier.height(48.dp))
 
                 Text(text = "Nombre")
