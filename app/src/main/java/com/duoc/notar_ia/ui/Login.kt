@@ -25,8 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.duoc.notar_ia.R
+import com.duoc.notar_ia.ui.theme.NotariaTheme
 
 @Composable
 fun Login(){
@@ -114,5 +116,15 @@ fun Login(){
 
             }
 
+    }
+}
+
+
+@Preview(showBackground = true, name = "Login normal")
+//@Preview(showBackground = true, widthDp = 320, name = "Pantalla angosta)
+@Composable
+fun LoginPreview() {
+    NotariaTheme {
+        Login()
     }
 }
