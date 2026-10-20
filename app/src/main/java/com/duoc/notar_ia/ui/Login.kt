@@ -15,9 +15,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -33,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,6 +51,7 @@ fun Login(){
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var modal by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false)} //Estado de contraseña
 
     // Colores compartidos por los campos del formulario
     val coloresCampos = OutlinedTextFieldDefaults.colors(
@@ -121,7 +126,18 @@ fun Login(){
                     },
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = PasswordVisualTransformation(),  // texto --> *****
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisible = !passwordVisible}) {
+                            Icon(
+                                imageVector = if(passwordVisible) Icons.Filled.Visibility
+                                                else Icons.Filled.VisibilityOff,
+                                contentDescription = if(passwordVisible) "Ocultar contraseña"
+                                                        else "Mostrar contraseña"
+                            )
+                        }
+                    },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None
+                                            else PasswordVisualTransformation(),  // texto --> *****
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password) // le avisa al teclado que es una contraseña
                 )
 
