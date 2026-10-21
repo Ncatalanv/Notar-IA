@@ -20,6 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NotariaTheme {
+                // Sin argumentos: la pantalla obtiene el ViewModel del ciclo de vida del Activity
                 LoginScreen()
             }
         }

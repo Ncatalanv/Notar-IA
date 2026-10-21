@@ -30,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -115,7 +114,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()){
                             contentDescription = "Icono de usuario"
                         )
                     },
-                    isError = uiState.errorUsuario != null,
+                    isError = uiState.intentoEnvio && uiState.errorUsuario != null,
                     supportingText = {
                         // ?.let --> si no es null, haz esto con el valor
                         uiState.errorUsuario?.let { mensaje ->
@@ -140,7 +139,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()){
                             contentDescription = "Icono de candado"
                         )
                     },
-                    isError = uiState.errorContrasena != null,
+                    isError = uiState.intentoEnvio && uiState.errorContrasena != null,
                     supportingText = {
                         uiState.errorContrasena?.let { mensaje ->
                             Text(mensaje, color = MaterialTheme.colorScheme.error)
