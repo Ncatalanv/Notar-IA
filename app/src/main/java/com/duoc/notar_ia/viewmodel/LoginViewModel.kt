@@ -33,17 +33,20 @@ class LoginViewModel : ViewModel(){
         validar()
     }
 
-    //Botón "Ingresar" marca el intento, valida, y si está todo bien abre el model de resultado
+    //Botón "Ingresar" marca el intento, valida, y si está todo bien abre el modal de resultado
     fun onEnviar(){
         _uiState.update { estadoActual -> estadoActual.copy(intentoEnvio = true) }
         validar()
 
-        if(_uiState.value.formularioValido){
-            _uiState.update { estadoActual ->
-                estadoActual.copy(mostrarModal = true, loginExitoso = true)
-            }
+        // Leemos si la validación quedó bien
+        val formularioValido = _uiState.value.formularioValido
+
+        // El modal se abre SIEMPRE: con éxito o con error
+        _uiState.update { estadoActual ->
+            estadoActual.copy(mostrarModal = true, loginExitoso = formularioValido)
         }
     }
+
 
     //Botón OK del modal --> lo cierra
     fun onCerrarModal(){
@@ -52,19 +55,19 @@ class LoginViewModel : ViewModel(){
         }
     }
 
-    // Recalcula los mensajes de rror según el contenido actual del formulario
+    // Recalcula los mensajes de error según el contenido actual del formulario
     // Lo llamamos después de cada cambio para que los errores estén actualizados
     private fun validar(){
         _uiState.update { estado ->
             estado.copy(
                 errorUsuario = when{
                     estado.usuario.isBlank() -> "El usuario es obligatorio"
-                    estado.usuario.length < 3 -> "El usuario debe tener al menos 3 carácteres"
+                    estado.usuario.length < 3 -> "El usuario debe tener al menos 3 caracteres"
                     else -> null
                 },
                 errorContrasena = when{
                     estado.contrasena.isBlank() -> "La contraseña es obligatoria"
-                    estado.contrasena.length < 6 -> "La contraseña debe tener al menos 6 carácteres"
+                    estado.contrasena.length < 6 -> "La contraseña debe tener al menos 6 caracteres"
                     else -> null
                 }
             )
