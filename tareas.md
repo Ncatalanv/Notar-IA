@@ -62,21 +62,21 @@
 - [x] Actualizar el `package` y el import en `MainActivity.kt`
 
 ### 4. LoginViewModel con StateFlow (B) `⚙️ Funcional`
-- [ ] Estado con usuario, contraseña y errores
-- [ ] La UI solo observa el estado
-- [ ] Nombres descriptivos y comentarios en el código
+- [x] Estado con usuario, contraseña y errores
+- [x] La UI solo observa el estado
+- [x] Nombres descriptivos y comentarios en el código
 
 ### 5. Validación de campos (A) `⚙️ Funcional`
-- [ ] Hacerla después de la tarjeta 4, dentro del ViewModel
-- [ ] Usuario no vacío (o formato de correo, si se decide)
-- [ ] Contraseña de 6 a 8 caracteres como mínimo
-- [ ] Mensajes de error bajo cada campo (`isError` y `supportingText`)
-- [ ] Botón deshabilitado hasta que el formulario sea válido
+- [x] Hacerla después de la tarjeta 4, dentro del ViewModel
+- [x] Usuario no vacío (o formato de correo, si se decide)
+- [x] Contraseña de 6 a 8 caracteres como mínimo
+- [x] Mensajes de error bajo cada campo (`isError` y `supportingText`)
+- [x] Botón deshabilitado hasta que el formulario sea válido
 
 ### 6. Modal de resultado (A) `⚙️ Funcional`
-- [ ] Quitar la contraseña del contenido
-- [ ] Mostrar éxito o error según la validación
-- [ ] El botón OK cierra el modal
+- [x] Quitar la contraseña del contenido
+- [x] Mostrar éxito o error según la validación
+- [x] El botón OK cierra el modal
 
 ---
 
