@@ -27,9 +27,11 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,18 +42,25 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.duoc.notar_ia.R
 import com.duoc.notar_ia.ui.theme.NotariaTheme
 import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.GrisMedio
+import com.duoc.notar_ia.viewmodel.LoginViewModel
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(viewModel: LoginViewModel = viewModel()){
 
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var modal by remember { mutableStateOf(false) }
-    var passwordVisible by remember { mutableStateOf(false)} //Estado de contraseña
+    // 1) Observar el estado primero. Cada vez que ViewModel lo cambie, esta función se ejecuta sola
+    val uiState by viewModel.uiState.collectAsState()
+    //var username by remember { mutableStateOf("") } --> reemplazada por uiState.usuario
+    //var password by remember { mutableStateOf("") } --> reemplazada por uiState.contrasena
+    //var modal by remember { mutableStateOf(false) } --> reemplazada por uiState.mostrarModal
+
+    // 2) El toggle de ver la contraseña (estado visual)
+    // rememberSaveable para que sobreviva al rotar el celular
+    var passwordVisible by rememberSaveable { mutableStateOf(false)} //Estado de contraseña
 
     // Colores compartidos por los campos del formulario
     val coloresCampos = OutlinedTextFieldDefaults.colors(
@@ -95,9 +104,9 @@ fun LoginScreen(){
                 Spacer(Modifier.height(48.dp))
 
                 OutlinedTextField(
-                    value = username,
+                    value = uiState.usuario,
                     onValueChange = { nuevoTexto ->
-                        username = nuevoTexto
+                        viewModel.onUsuarioChange(nuevoTexto)
                     },
                     label = { Text("Introduce tu nombre") },
                     leadingIcon = {
@@ -106,6 +115,13 @@ fun LoginScreen(){
                             contentDescription = "Icono de usuario"
                         )
                     },
+                    isError = uiState.errorUsuario != null,
+                    supportingText = {
+                        // ?.let --> si no es null, haz esto con el valor
+                        uiState.errorUsuario?.let { mensaje ->
+                            Text(mensaje, color = MaterialTheme.colorScheme.error)
+                        }
+                    },
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -113,9 +129,9 @@ fun LoginScreen(){
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
-                    value = password,
+                    value = uiState.contrasena,
                     onValueChange = { nuevoTexto ->
-                        password = nuevoTexto
+                        viewModel.onContrasenaChange(nuevoTexto)
                     },
                     label = { Text("Introduce tu contraseña") },
                     leadingIcon = {  //leadingIcon --> icono al inicio (izquierda)
@@ -123,6 +139,12 @@ fun LoginScreen(){
                             imageVector = Icons.Filled.Lock,
                             contentDescription = "Icono de candado"
                         )
+                    },
+                    isError = uiState.errorContrasena != null,
+                    supportingText = {
+                        uiState.errorContrasena?.let { mensaje ->
+                            Text(mensaje, color = MaterialTheme.colorScheme.error)
+                        }
                     },
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth(),
@@ -144,7 +166,9 @@ fun LoginScreen(){
                 Spacer(modifier = Modifier.height(42.dp))
 
                 Button(
-                    onClick = { modal = true },
+                    onClick = { viewModel.onEnviar() },
+                    // Deshabilitado solo si el formulario está vacío
+                    enabled = uiState.usuario.isNotBlank() || uiState.contrasena.isNotBlank(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
@@ -153,14 +177,25 @@ fun LoginScreen(){
                     Text(text = "Ingresar")
                 }
 
-                if (modal) {
+                if (uiState.mostrarModal) {
                     AlertDialog(
-                        onDismissRequest = { modal = false },
+                        onDismissRequest = { viewModel.onCerrarModal() },
                         containerColor = GrisMedio,
-                        title = { Text("Mensaje", color = MaterialTheme.colorScheme.primary) },
-                        text = { Text("Se debe crear el usuario: $username con la contraseña:$password") },
+                        title = {
+                            Text(
+                                text = if (uiState.loginExitoso) "Sesión Iniciada!" else "No se ha podido acceder...",
+                                color = MaterialTheme.colorScheme.primary
+                            ) },
+                        text = {
+                            Text(
+                                if (uiState.loginExitoso)
+                                    "Bienvenido, ${uiState.usuario}. Has iniciado sesión correctamente."
+                                else
+                                    "Revise los campos marcados e intente nuevamente."
+                            )
+                        },
                         confirmButton = {
-                            Button(onClick = { modal = false }) {
+                            Button(onClick = { viewModel.onCerrarModal() }) {
                                 Text("OK")
                             }
                         }
@@ -178,6 +213,6 @@ fun LoginScreen(){
 @Composable
 fun LoginScreenPreview() {
     NotariaTheme {
-        LoginScreen()
+        LoginScreen(viewModel = LoginViewModel())
     }
 }
