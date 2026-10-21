@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,4 +53,16 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation("androidx.compose.material:material-icons-extended")
+
+    // Room: persistencia local con SQLite                                                                                                                                             13% used
+    implementation(libs.androidx.room.runtime)        // Anotaciones @Entity, @Dao, @Database
+    implementation(libs.androidx.room.ktx)            // Soporte para corrutinas (suspend/Flow)
+    ksp(libs.androidx.room.compiler)                  // Genera el código de Room al compilar
+
+    // Navegación entre pantallas
+    implementation(libs.androidx.navigation.compose)  // NavHost y rememberNavController
+
+    // ViewModel: estado que sobrevive a rotaciones
+    implementation(libs.androidx.lifecycle.viewmodel.compose)  // Función viewModel() en Compose
+
 }

@@ -46,11 +46,11 @@
 ## 🏁 Lista: Sprint 1
 
 ### 1. Estructura MVVM y dependencias (B) `🤝 Colaboración`
-- [ ] Paquetes: `data/local`, `data/repository`, `viewmodel`, `navigation`, `ui/screens`, `ui/components`
-- [ ] Un archivo en cada paquete, para que Git los guarde
-- [ ] Agregar Room, Navigation Compose y `lifecycle-viewmodel-compose`
-- [ ] Eliminar `dfdf.txt`
-- [ ] El proyecto compila sin errores
+- [x] Paquetes: `model`, `repository`, `viewmodel`, `ui` (+ `ui/screens`, `ui/components`, `ui/theme`)
+- [x] Un `.gitkeep` en cada paquete vacío, para que Git los guarde
+- [x] Agregar Room, Navigation Compose y `lifecycle-viewmodel-compose`
+- [x] Eliminar `dfdf.txt`
+- [x] El proyecto compila sin errores
 
 ### 2. Acordar el flujo de Git (AB) `🤝 Colaboración`
 - [ ] Invitar al colega al repositorio y al Trello
@@ -58,8 +58,8 @@
 - [ ] Acordar el formato de los commits (mensajes descriptivos)
 
 ### 3. Mover el Login a ui/screens (A) `⚙️ Funcional`
-- [ ] `Login.kt` → `ui/screens/LoginScreen.kt`
-- [ ] Hacerlo después de la tarjeta 1
+- [x] `LoginScreen.kt` → `ui/screens/LoginScreen.kt`
+- [x] Actualizar el `package` y el import en `MainActivity.kt`
 
 ### 4. LoginViewModel con StateFlow (B) `⚙️ Funcional`
 - [ ] Estado con usuario, contraseña y errores
@@ -83,8 +83,9 @@
 ## 🚀 Lista: Sprint 2
 
 ### 7. Room: base de datos de usuarios (B) `⚙️ Funcional`
-- [ ] `UsuarioEntity`, `UsuarioDao` y `AppDatabase`
-- [ ] `UsuarioRepository`
+- [ ] `Usuario` (entidad), `UsuarioDao` y `AppDatabase` en el paquete `model`
+- [ ] `UsuarioForm` y `MensajesError` para el estado del formulario
+- [ ] `UsuarioRepository` en el paquete `repository`
 - [ ] No guardar la contraseña en texto plano (hash simple)
 
 ### 8. Pantalla de registro (A) `⚙️ Funcional`

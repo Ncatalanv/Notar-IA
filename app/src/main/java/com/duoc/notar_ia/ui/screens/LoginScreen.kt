@@ -1,4 +1,4 @@
-package com.duoc.notar_ia.ui
+package com.duoc.notar_ia.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +46,7 @@ import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.GrisMedio
 
 @Composable
-fun Login(){
+fun LoginScreen(){
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -176,8 +176,8 @@ fun Login(){
 @Preview(showBackground = true, name = "Login normal")
 //@Preview(showBackground = true, widthDp = 320, name = "Pantalla angosta)
 @Composable
-fun LoginPreview() {
+fun LoginScreenPreview() {
     NotariaTheme {
-        Login()
+        LoginScreen()
     }
 }
