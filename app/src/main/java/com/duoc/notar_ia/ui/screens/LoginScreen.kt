@@ -47,6 +47,7 @@ import com.duoc.notar_ia.ui.theme.NotariaTheme
 import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.GrisMedio
 import com.duoc.notar_ia.viewmodel.LoginViewModel
+import com.duoc.notar_ia.viewmodel.RegistroViewModel
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel()){
