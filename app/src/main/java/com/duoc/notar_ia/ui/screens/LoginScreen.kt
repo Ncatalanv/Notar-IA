@@ -47,7 +47,6 @@ import com.duoc.notar_ia.ui.theme.NotariaTheme
 import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.GrisMedio
 import com.duoc.notar_ia.viewmodel.LoginViewModel
-import com.duoc.notar_ia.viewmodel.RegistroViewModel
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.TextButton
 
@@ -169,7 +168,18 @@ fun LoginScreen(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password) // le avisa al teclado que es una contraseña
                 )
 
-                Spacer(modifier = Modifier.height(42.dp))
+                TextButton(
+                    onClick = onNavigateToRegistro,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = "¿No tienes cuenta? Regístrate aquí",
+                        color = Dorado,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
                     onClick = { viewModel.onEnviar() },
