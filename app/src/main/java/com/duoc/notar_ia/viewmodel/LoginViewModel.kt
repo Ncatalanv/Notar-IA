@@ -17,10 +17,10 @@ class LoginViewModel : ViewModel(){
     // Estado público de solo lectura. La UI lo observa pero no se modifica
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-    // función que se activa cuando la persona escribe en el campo de usuario
-    fun onUsuarioChange(nuevoUsuario: String){
+    // función que se activa cuando la persona escribe en el campo de correo
+    fun onCorreoChange(nuevoCorreo: String){
         _uiState.update {  estadoActual ->
-            estadoActual.copy(usuario = nuevoUsuario, errorUsuario = null)
+            estadoActual.copy(correo = nuevoCorreo, errorCorreo = null)
         }
         validar()
     }
@@ -58,11 +58,12 @@ class LoginViewModel : ViewModel(){
     // Recalcula los mensajes de error según el contenido actual del formulario
     // Lo llamamos después de cada cambio para que los errores estén actualizados
     private fun validar(){
+        val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
         _uiState.update { estado ->
             estado.copy(
-                errorUsuario = when{
-                    estado.usuario.isBlank() -> "El usuario es obligatorio"
-                    estado.usuario.length < 3 -> "El usuario debe tener al menos 3 caracteres"
+                errorCorreo = when{
+                    estado.correo.isBlank() -> "El correo es obligatorio"
+                    !emailRegex.matches(estado.correo) -> "Ingresa un correo válido"
                     else -> null
                 },
                 errorContrasena = when{

@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
@@ -48,13 +48,18 @@ import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.GrisMedio
 import com.duoc.notar_ia.viewmodel.LoginViewModel
 import com.duoc.notar_ia.viewmodel.RegistroViewModel
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.TextButton
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()){
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel(),
+    onNavigateToRegistro: () -> Unit = {}
+){
 
     // 1) Observar el estado primero. Cada vez que ViewModel lo cambie, esta función se ejecuta sola
     val uiState by viewModel.uiState.collectAsState()
-    //var username by remember { mutableStateOf("") } --> reemplazada por uiState.usuario
+    //var username by remember { mutableStateOf("") } --> reemplazada por uiState.correo
     //var password by remember { mutableStateOf("") } --> reemplazada por uiState.contrasena
     //var modal by remember { mutableStateOf(false) } --> reemplazada por uiState.mostrarModal
 
@@ -104,24 +109,25 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()){
                 Spacer(Modifier.height(48.dp))
 
                 OutlinedTextField(
-                    value = uiState.usuario,
+                    value = uiState.correo,
                     onValueChange = { nuevoTexto ->
-                        viewModel.onUsuarioChange(nuevoTexto)
+                        viewModel.onCorreoChange(nuevoTexto)
                     },
-                    label = { Text("Introduce tu nombre") },
+                    label = { Text("Correo electrónico") },
                     leadingIcon = {
-                        Icon(  //Icono de usuario en campo de nombre
-                            imageVector = Icons.Filled.Person,
-                            contentDescription = "Icono de usuario"
+                        Icon(  //Icono de correo en campo de correo
+                            imageVector = Icons.Filled.Email,
+                            contentDescription = "Icono de correo"
                         )
                     },
-                    isError = uiState.intentoEnvio && uiState.errorUsuario != null,
+                    isError = uiState.intentoEnvio && uiState.errorCorreo != null,
                     supportingText = {
                         // ?.let --> si no es null, haz esto con el valor
-                        uiState.errorUsuario?.let { mensaje ->
+                        uiState.errorCorreo?.let { mensaje ->
                             Text(mensaje, color = MaterialTheme.colorScheme.error)
                         }
                     },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     colors = coloresCampos,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -168,7 +174,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()){
                 Button(
                     onClick = { viewModel.onEnviar() },
                     // Deshabilitado solo si el formulario está vacío
-                    enabled = uiState.usuario.isNotBlank() || uiState.contrasena.isNotBlank(),
+                    enabled = uiState.correo.isNotBlank() && uiState.contrasena.isNotBlank(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
@@ -189,7 +195,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()){
                         text = {
                             Text(
                                 if (uiState.loginExitoso)
-                                    "Bienvenido, ${uiState.usuario}. Has iniciado sesión correctamente."
+                                    "Bienvenido, ${uiState.correo}. Has iniciado sesión correctamente."
                                 else
                                     "Revise los campos marcados e intente nuevamente."
                             )

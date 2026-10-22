@@ -3,9 +3,9 @@ package com.duoc.notar_ia.model
 // el estado: qué hay escrito y qué error hay
 // Estado completo de la pantalla de login
 data class LoginUiState(
-    val usuario: String = "",
+    val correo: String = "",
     val contrasena: String = "",
-    val errorUsuario: String? = null,  // null --> sin error
+    val errorCorreo: String? = null,  // null --> sin error
     val errorContrasena: String? = null,
     val mostrarModal: Boolean = false,
     val loginExitoso: Boolean = false,
@@ -13,5 +13,5 @@ data class LoginUiState(
 ){
     // formulario es válido cuando no hay error
     val formularioValido: Boolean
-        get() = errorUsuario == null && errorContrasena == null
+        get() = errorCorreo == null && errorContrasena == null
 }
