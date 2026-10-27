@@ -9,6 +9,7 @@ import com.duoc.notar_ia.repository.UsuarioRepository
 import com.duoc.notar_ia.ui.screens.HomeScreen
 import com.duoc.notar_ia.ui.screens.LoginScreen
 import com.duoc.notar_ia.ui.screens.RegistroScreen
+import com.duoc.notar_ia.utils.SessionManager
 import com.duoc.notar_ia.viewmodel.LoginViewModelFactory
 import com.duoc.notar_ia.viewmodel.RegistroViewModelFactory
 
@@ -19,16 +20,23 @@ object Routes {
 }
 
 @Composable
-fun AppNavigation(usuarioRepository: UsuarioRepository) {
+fun AppNavigation(
+    usuarioRepository: UsuarioRepository,
+    sessionManager: SessionManager
+) {
     val navController = rememberNavController()
+
+    val startDestination = if (sessionManager.isLoggedIn()) Routes.HOME else Routes.LOGIN
 
     NavHost(
         navController = navController,
-        startDestination = Routes.LOGIN
+        startDestination = startDestination
     ) {
         composable(Routes.LOGIN) {
             LoginScreen(
-                viewModel = viewModel(factory = LoginViewModelFactory(usuarioRepository)),
+                viewModel = viewModel(
+                    factory = LoginViewModelFactory(usuarioRepository, sessionManager)
+                ),
                 onNavigateToRegistro = { navController.navigate(Routes.REGISTRO) },
                 onLoginExitoso = {
                     navController.navigate(Routes.HOME) {
@@ -48,6 +56,7 @@ fun AppNavigation(usuarioRepository: UsuarioRepository) {
                 onTramiteClick = { /* TODO: navegar a detalle del trámite */ },
                 onNavegar = { destino ->
                     if (destino == "Perfil") {
+                        sessionManager.clearSession()
                         navController.navigate(Routes.LOGIN) {
                             popUpTo(Routes.HOME) { inclusive = true }
                         }

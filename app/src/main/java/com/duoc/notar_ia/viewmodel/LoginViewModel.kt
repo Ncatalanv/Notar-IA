@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duoc.notar_ia.model.LoginUiState
 import com.duoc.notar_ia.repository.UsuarioRepository
+import com.duoc.notar_ia.utils.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 // lógica: recibe eventos, actualiza el estado y valida contra Room
 
 class LoginViewModel(
-    private val usuarioRepository: UsuarioRepository
+    private val usuarioRepository: UsuarioRepository,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     // MutableStateFlow --> por dentro se puede modificar
@@ -57,6 +59,11 @@ class LoginViewModel(
                 contrasena = _uiState.value.contrasena
             )
             if (usuario != null) {
+                sessionManager.saveSession(
+                    id = usuario.id,
+                    nombre = usuario.nombre,
+                    correo = usuario.correo
+                )
                 _uiState.update { estadoActual ->
                     estadoActual.copy(
                         mostrarModal = true,
