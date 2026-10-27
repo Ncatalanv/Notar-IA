@@ -9,6 +9,7 @@ import com.duoc.notar_ia.ui.screens.AntecedentesLegalesScreen
 import com.duoc.notar_ia.ui.screens.CrearTramiteAsistenteScreen
 import com.duoc.notar_ia.ui.screens.HomeScreen
 import com.duoc.notar_ia.ui.screens.LoginScreen
+import com.duoc.notar_ia.ui.screens.TipoFirmaMetodoScreen
 import com.duoc.notar_ia.ui.theme.NotariaTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
             NotariaTheme {
                 //AppNavigation()
                 //HomeScreen()
-                CrearTramiteAsistenteScreen()
+                //CrearTramiteAsistenteScreen()
+                TipoFirmaMetodoScreen()
             }
         }
     }
