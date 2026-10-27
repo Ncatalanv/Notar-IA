@@ -245,7 +245,7 @@ fun RegistroScreen(
                             if (uiState.registroExitoso)
                                 "Bienvenido, ${uiState.nombre}. Tu cuenta fue creada correctamente."
                             else
-                                "Revisa los campos marcados e intenta nuevamente."
+                                uiState.errorGeneral ?: "Revisa los campos marcados e intenta nuevamente."
                         )
                     },
                     confirmButton = {

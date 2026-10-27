@@ -1,5 +1,6 @@
 package com.duoc.notar_ia.repository
 
+import android.database.sqlite.SQLiteConstraintException
 import com.duoc.notar_ia.model.UsuarioDao
 import com.duoc.notar_ia.model.UsuarioEntity
 import com.duoc.notar_ia.utils.HashUtil
@@ -17,6 +18,8 @@ class UsuarioRepository(private val usuarioDao: UsuarioDao) {
             )
             usuarioDao.insertar(usuario)
             Result.success(Unit)
+        } catch (e: SQLiteConstraintException) {
+            Result.failure(Exception("El correo ya está registrado"))
         } catch (e: Exception) {
             Result.failure(e)
         }
