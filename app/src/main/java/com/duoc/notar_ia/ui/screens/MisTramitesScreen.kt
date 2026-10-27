@@ -1,6 +1,7 @@
 package com.duoc.notar_ia.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -46,9 +47,11 @@ fun MisTramitesScreen(onAbrir: (String) -> Unit = {}) {
         tramites.filter { filtro == "Todos" || it.second == filtro }
             .forEach { (nombre, estado, id) ->
                 Card(
-                    Modifier.fillMaxWidth().padding(vertical = 6.dp),
-                    colors = CardDefaults.cardColors(containerColor = GrisMedio),
-                    onClick = { onAbrir(id) }
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp)
+                        .clickable { onAbrir(id) },
+                    colors = CardDefaults.cardColors(containerColor = GrisMedio)
                 ) {
                     Column(Modifier.padding(16.dp)) {
                         Text("Trámite N.º $id", color = Dorado, fontSize = 12.sp)

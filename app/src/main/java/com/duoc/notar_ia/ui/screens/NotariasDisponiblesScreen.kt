@@ -1,6 +1,7 @@
 package com.duoc.notar_ia.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -42,9 +43,11 @@ fun NotariasDisponiblesScreen(
         notarias.filter { it.contains(busqueda, ignoreCase = true) }
             .forEach { notaria ->
                 Card(
-                    Modifier.fillMaxWidth().padding(vertical = 6.dp),
-                    colors = CardDefaults.cardColors(containerColor = GrisMedio),
-                    onClick = { onSeleccionar(notaria) }
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp)
+                        .clickable { onSeleccionar(notaria) },
+                    colors = CardDefaults.cardColors(containerColor = GrisMedio)
                 ) {
                     Column(Modifier.padding(16.dp)) {
                         Text("⌖", color = Dorado, fontSize = 25.sp)
