@@ -41,7 +41,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.duoc.notar_ia.R
 import com.duoc.notar_ia.ui.theme.NotariaTheme
 import com.duoc.notar_ia.ui.theme.Dorado
@@ -52,8 +51,9 @@ import androidx.compose.material3.TextButton
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = viewModel(),
-    onNavigateToRegistro: () -> Unit = {}
+    viewModel: LoginViewModel,
+    onNavigateToRegistro: () -> Unit = {},
+    onLoginExitoso: () -> Unit = {}
 ){
 
     // 1) Observar el estado primero. Cada vez que ViewModel lo cambie, esta función se ejecuta sola
@@ -211,7 +211,10 @@ fun LoginScreen(
                             )
                         },
                         confirmButton = {
-                            Button(onClick = { viewModel.onCerrarModal() }) {
+                            Button(onClick = {
+                                viewModel.onCerrarModal()
+                                if (uiState.loginExitoso) onLoginExitoso()
+                            }) {
                                 Text("OK")
                             }
                         }
@@ -224,11 +227,3 @@ fun LoginScreen(
 }
 
 
-@Preview(showBackground = true, name = "Login normal")
-//@Preview(showBackground = true, widthDp = 320, name = "Pantalla angosta)
-@Composable
-fun LoginScreenPreview() {
-    NotariaTheme {
-        LoginScreen(viewModel = LoginViewModel())
-    }
-}

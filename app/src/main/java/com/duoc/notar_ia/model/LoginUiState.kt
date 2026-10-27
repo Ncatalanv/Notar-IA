@@ -7,6 +7,7 @@ data class LoginUiState(
     val contrasena: String = "",
     val errorCorreo: String? = null,  // null --> sin error
     val errorContrasena: String? = null,
+    val errorGeneral: String? = null,
     val mostrarModal: Boolean = false,
     val loginExitoso: Boolean = false,
     val intentoEnvio: Boolean = false //Para no mostrar errores mientras la persona escribe

@@ -5,23 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.duoc.notar_ia.ui.navigation.AppNavigation
-import com.duoc.notar_ia.ui.screens.AntecedentesLegalesScreen
-import com.duoc.notar_ia.ui.screens.CrearTramiteAsistenteScreen
-import com.duoc.notar_ia.ui.screens.HomeScreen
-import com.duoc.notar_ia.ui.screens.LoginScreen
-import com.duoc.notar_ia.ui.screens.TipoFirmaMetodoScreen
 import com.duoc.notar_ia.ui.theme.NotariaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val usuarioRepository = (application as NotariaApplication).usuarioRepository
+
         setContent {
             NotariaTheme {
-                //AppNavigation()
-                //HomeScreen()
-                //CrearTramiteAsistenteScreen()
-                TipoFirmaMetodoScreen()
+                AppNavigation(usuarioRepository = usuarioRepository)
             }
         }
     }
