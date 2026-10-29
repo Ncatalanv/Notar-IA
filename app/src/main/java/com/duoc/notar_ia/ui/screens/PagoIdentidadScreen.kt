@@ -4,15 +4,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.duoc.notar_ia.ui.theme.*
 
 @Composable
-fun PagoIdentidadScreen(onPagar: () -> Unit = {}) {
-    var identidad by remember { mutableStateOf(false) }
+fun PagoIdentidadScreen(
+    identidadVerificada: Boolean = false,
+    onVerificarIdentidad: () -> Unit = {},
+    onPagar: () -> Unit = {}
+) {
+    var identidad by remember { mutableStateOf(identidadVerificada) }
     var aceptar by remember { mutableStateOf(false) }
+
+    // Si volvemos de FaceCaptureScreen con éxito, se marca la identidad como verificada
+    LaunchedEffect(identidadVerificada) {
+        identidad = identidadVerificada
+    }
 
     Column(
         Modifier.fillMaxSize().background(FondoOscuro).padding(20.dp)
@@ -38,16 +48,27 @@ fun PagoIdentidadScreen(onPagar: () -> Unit = {}) {
 
         Spacer(Modifier.height(20.dp))
         Text("Verificación de identidad", color = Dorado, fontSize = 18.sp)
-        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-            Checkbox(
-                checked = identidad,
-                onCheckedChange = { identidad = it },
-                colors = CheckboxDefaults.colors(checkedColor = Dorado)
-            )
-            Text("Identidad verificada (demo)", color = TextoClaro)
+
+        if (identidad) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = true,
+                    onCheckedChange = null,
+                    colors = CheckboxDefaults.colors(checkedColor = Dorado)
+                )
+                Text("Identidad verificada", color = TextoClaro)
+            }
+        } else {
+            Button(
+                onClick = onVerificarIdentidad,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Dorado)
+            ) {
+                Text("Verificar identidad con cámara", color = FondoOscuro)
+            }
         }
 
-        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = aceptar,
                 onCheckedChange = { aceptar = it },
