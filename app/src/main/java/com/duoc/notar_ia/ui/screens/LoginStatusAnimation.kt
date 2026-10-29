@@ -32,7 +32,7 @@ import com.duoc.notar_ia.ui.theme.GrisMedio
 import com.duoc.notar_ia.ui.theme.TextoClaro
 import kotlinx.coroutines.delay
 
-enum class LoginUiState {
+enum class LoginAnimationState {
     Idle,
     Loading,
     Success
@@ -40,13 +40,13 @@ enum class LoginUiState {
 
 @Composable
 fun LoginStatusAnimation(
-    state: LoginUiState,
+    state: LoginAnimationState,
     onSuccessAnimationFinished: () -> Unit
 ) {
-    if (state == LoginUiState.Idle) return
+    if (state == LoginAnimationState.Idle) return
 
     LaunchedEffect(state) {
-        if (state == LoginUiState.Success) {
+        if (state == LoginAnimationState.Success) {
             delay(1000)
             onSuccessAnimationFinished()
         }
@@ -62,7 +62,7 @@ fun LoginStatusAnimation(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (state == LoginUiState.Loading) {
+            if (state == LoginAnimationState.Loading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(76.dp),
                     color = Dorado,
@@ -79,7 +79,7 @@ fun LoginStatusAnimation(
                 )
             }
 
-            if (state == LoginUiState.Success) {
+            if (state == LoginAnimationState.Success) {
                 val escala = animateFloatAsState(
                     targetValue = 1f,
                     animationSpec = tween(450),

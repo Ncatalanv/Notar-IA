@@ -10,7 +10,8 @@ data class LoginUiState(
     val errorGeneral: String? = null,
     val mostrarModal: Boolean = false,
     val loginExitoso: Boolean = false,
-    val intentoEnvio: Boolean = false //Para no mostrar errores mientras la persona escribe
+    val intentoEnvio: Boolean = false, //Para no mostrar errores mientras la persona escribe
+    val mostrarAnimacionExito: Boolean = false
 ){
     // formulario es válido cuando no hay error
     val formularioValido: Boolean

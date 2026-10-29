@@ -2,6 +2,7 @@ package com.duoc.notar_ia.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,6 +49,8 @@ import com.duoc.notar_ia.ui.theme.GrisMedio
 import com.duoc.notar_ia.viewmodel.LoginViewModel
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.TextButton
+import com.duoc.notar_ia.ui.screens.LoginStatusAnimation
+import com.duoc.notar_ia.ui.screens.LoginAnimationState
 
 @Composable
 fun LoginScreen(
@@ -80,6 +83,7 @@ fun LoginScreen(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
+        Box(modifier = Modifier.fillMaxSize()) {
         Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -223,6 +227,16 @@ fun LoginScreen(
 
             }
 
+            if (uiState.mostrarAnimacionExito) {
+                LoginStatusAnimation(
+                    state = LoginAnimationState.Success,
+                    onSuccessAnimationFinished = {
+                        viewModel.onAnimacionFinalizada()
+                        onLoginExitoso()
+                    }
+                )
+            }
+        }
     }
 }
 

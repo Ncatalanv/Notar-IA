@@ -66,7 +66,7 @@ class LoginViewModel(
                 )
                 _uiState.update { estadoActual ->
                     estadoActual.copy(
-                        mostrarModal = true,
+                        mostrarAnimacionExito = true,
                         loginExitoso = true
                     )
                 }
@@ -86,6 +86,13 @@ class LoginViewModel(
     fun onCerrarModal() {
         _uiState.update { estadoActual ->
             estadoActual.copy(mostrarModal = false)
+        }
+    }
+
+    // Se llama cuando termina la animación de inicio de sesión exitoso
+    fun onAnimacionFinalizada() {
+        _uiState.update { estadoActual ->
+            estadoActual.copy(mostrarAnimacionExito = false)
         }
     }
 
