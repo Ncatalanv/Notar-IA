@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.duoc.notar_ia.repository.UsuarioRepository
 import com.duoc.notar_ia.ui.screens.HomeScreen
 import com.duoc.notar_ia.ui.screens.LoginScreen
+import com.duoc.notar_ia.ui.screens.PerfilScreen
 import com.duoc.notar_ia.ui.screens.RegistroScreen
 import com.duoc.notar_ia.utils.SessionManager
 import com.duoc.notar_ia.viewmodel.LoginViewModelFactory
@@ -17,6 +18,7 @@ object Routes {
     const val LOGIN = "login"
     const val REGISTRO = "registro"
     const val HOME = "home"
+    const val PERFIL = "perfil"
 }
 
 @Composable
@@ -55,13 +57,24 @@ fun AppNavigation(
             HomeScreen(
                 onTramiteClick = { /* TODO: navegar a detalle del trámite */ },
                 onNavegar = { destino ->
-                    if (destino == "Perfil") {
-                        sessionManager.clearSession()
-                        navController.navigate(Routes.LOGIN) {
-                            popUpTo(Routes.HOME) { inclusive = true }
-                        }
+                    when (destino) {
+                        "Perfil" -> navController.navigate(Routes.PERFIL)
                     }
                 }
+            )
+        }
+        composable(Routes.PERFIL) {
+            PerfilScreen(
+                nombre = sessionManager.getUserName(),
+                correo = sessionManager.getUserEmail(),
+                onEditarPerfil = { /* TODO: editar perfil */ },
+                onCerrarSesion = {
+                    sessionManager.clearSession()
+                    navController.navigate(Routes.LOGIN) {
+                        popUpTo(Routes.HOME) { inclusive = true }
+                    }
+                },
+                onVolver = { navController.popBackStack() }
             )
         }
     }
