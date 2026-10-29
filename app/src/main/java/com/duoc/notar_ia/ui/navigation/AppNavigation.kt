@@ -171,7 +171,8 @@ fun AppNavigation(
             NotariasDisponiblesScreen(
                 onSeleccionar = { nombre ->
                     navController.navigate(Routes.detalleNotaria(nombre))
-                }
+                },
+                onVolver = {navController.popBackStack()}
             )
         }
 

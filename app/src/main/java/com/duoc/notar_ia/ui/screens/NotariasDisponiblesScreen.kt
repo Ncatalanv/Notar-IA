@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -12,7 +13,8 @@ import com.duoc.notar_ia.ui.theme.*
 
 @Composable
 fun NotariasDisponiblesScreen(
-    onSeleccionar: (String) -> Unit = {}
+    onSeleccionar: (String) -> Unit = {},
+            onVolver: () -> Unit = {}
 ) {
     var busqueda by remember { mutableStateOf("") }
 
@@ -25,8 +27,27 @@ fun NotariasDisponiblesScreen(
     Column(
         Modifier.fillMaxSize().background(FondoOscuro).padding(16.dp)
     ) {
-        Text("NOTAR-IA", color = Dorado)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = onVolver) {
+                Text(
+                    text = "‹ Volver",
+                    color = Dorado,
+                    fontSize = 16.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text("NOTAR-IA", color = Dorado)
+            Spacer(modifier = Modifier.weight(1f))
+            Box(modifier = Modifier.size(64.dp))
+        }
         Spacer(Modifier.height(24.dp))
+
+
         Text("Notarías disponibles", color = Dorado, fontSize = 27.sp)
         Spacer(Modifier.height(12.dp))
 
