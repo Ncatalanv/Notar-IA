@@ -62,7 +62,7 @@ fun FaceCaptureScreen(
         if (isGranted) {
             permissionDenied = false
             state = FaceCaptureState.Capturing
-            cameraLauncher.launch()
+            cameraLauncher.launch(null)
         } else {
             permissionDenied = true
             state = FaceCaptureState.Idle
@@ -77,7 +77,7 @@ fun FaceCaptureScreen(
             ) == PackageManager.PERMISSION_GRANTED -> {
                 permissionDenied = false
                 state = FaceCaptureState.Capturing
-                cameraLauncher.launch()
+                cameraLauncher.launch(null)
             }
 
             activity.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
