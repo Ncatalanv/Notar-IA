@@ -26,6 +26,7 @@ private data class Tramite(
 @Composable
 fun HomeScreen(
     onTramiteClick: (String) -> Unit = {},
+    onVerNotarias: () -> Unit = {},
     onNavegar: (String) -> Unit = {}
 ) {
     var busqueda by remember { mutableStateOf("") }
@@ -199,6 +200,67 @@ fun HomeScreen(
                     color = TextoClaro,
                     modifier = Modifier.padding(vertical = 20.dp)
                 )
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                "Notarías cercanas",
+                color = Dorado,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(Modifier.height(14.dp))
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 18.dp)
+                    .clickable { onVerNotarias() },
+                shape = RoundedCornerShape(5.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = GrisMedio
+                ),
+                elevation = CardDefaults.cardElevation(4.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(58.dp)
+                            .background(
+                                Color.Black,
+                                RoundedCornerShape(6.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("⌖", color = Dorado, fontSize = 34.sp)
+                    }
+
+                    Spacer(Modifier.width(12.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            "Buscar notarías disponibles",
+                            color = TextoClaro,
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(Modifier.height(8.dp))
+
+                        Text(
+                            "Encuentra notarías presenciales cerca de ti",
+                            color = TextoClaro,
+                            fontSize = 12.sp
+                        )
+                    }
+                }
             }
         }
 
