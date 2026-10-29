@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -12,7 +13,8 @@ import com.duoc.notar_ia.ui.theme.*
 
 @Composable
 fun CrearTramiteAsistenteScreen(
-    onContinuar: (String) -> Unit = {}
+    onContinuar: (String) -> Unit = {},
+    onVolver: () -> Unit = {}
 ) {
     var consulta by remember { mutableStateOf("") }
     var mostrarOpciones by remember { mutableStateOf(false) }
@@ -20,7 +22,24 @@ fun CrearTramiteAsistenteScreen(
     Column(
         Modifier.fillMaxSize().background(FondoOscuro).padding(20.dp)
     ) {
-        Text("NOTAR-IA", color = Dorado, fontSize = 14.sp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = onVolver) {
+                Text(
+                    text = "‹ Volver",
+                    color = Dorado,
+                    fontSize = 16.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text("NOTAR-IA", color = Dorado, fontSize = 14.sp)
+            Spacer(modifier = Modifier.weight(1f))
+            Box(modifier = Modifier.size(64.dp))
+        }
         Spacer(Modifier.height(28.dp))
         Text("Crear trámite con asistente", color = Dorado, fontSize = 27.sp)
         Spacer(Modifier.height(10.dp))

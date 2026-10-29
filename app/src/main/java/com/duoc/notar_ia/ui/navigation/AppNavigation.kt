@@ -115,7 +115,8 @@ fun AppNavigation(
 
         composable(Routes.CREAR_TRAMITE) {
             CrearTramiteAsistenteScreen(
-                onContinuar = { navController.navigate(Routes.CARGAR_DOCUMENTO) }
+                onContinuar = { navController.navigate(Routes.CARGAR_DOCUMENTO) },
+                onVolver = {navController.popBackStack()}
             )
         }
 
