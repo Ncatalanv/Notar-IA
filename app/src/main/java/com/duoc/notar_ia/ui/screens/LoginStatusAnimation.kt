@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,12 +28,10 @@ import androidx.compose.ui.unit.sp
 import com.duoc.notar_ia.ui.theme.Dorado
 import com.duoc.notar_ia.ui.theme.FondoOscuro
 import com.duoc.notar_ia.ui.theme.GrisMedio
-import com.duoc.notar_ia.ui.theme.TextoClaro
 import kotlinx.coroutines.delay
 
 enum class LoginAnimationState {
     Idle,
-    Loading,
     Success
 }
 
@@ -62,23 +59,6 @@ fun LoginStatusAnimation(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (state == LoginAnimationState.Loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(76.dp),
-                    color = Dorado,
-                    strokeWidth = 5.dp
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Iniciando sesión...",
-                    color = TextoClaro,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-
             if (state == LoginAnimationState.Success) {
                 val escala = animateFloatAsState(
                     targetValue = 1f,

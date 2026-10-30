@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Notar-ia</string>
+    <string name="login_cargando">Iniciando sesión...</string>
 </resources>

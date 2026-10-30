@@ -5,6 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.duoc.notar_ia.model.LoginUiState
 import com.duoc.notar_ia.repository.UsuarioRepository
 import com.duoc.notar_ia.utils.SessionManager
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,6 +45,9 @@ class LoginViewModel(
 
     // Botón "Ingresar" marca el intento, valida, y si está todo bien consulta Room
     fun onEnviar() {
+        // Evita que un doble toque lance dos consultas mientras ya hay una en curso
+        if (_uiState.value.estaCargando) return
+
         _uiState.update { estadoActual ->
             estadoActual.copy(intentoEnvio = true, errorGeneral = null)
         }
@@ -53,30 +60,60 @@ class LoginViewModel(
             return
         }
 
+        _uiState.update { estadoActual ->
+            estadoActual.copy(estaCargando = true)
+        }
+
         viewModelScope.launch {
-            val usuario = usuarioRepository.login(
-                correo = _uiState.value.correo,
-                contrasena = _uiState.value.contrasena
-            )
-            if (usuario != null) {
-                sessionManager.saveSession(
-                    id = usuario.id,
-                    nombre = usuario.nombre,
-                    correo = usuario.correo
-                )
-                _uiState.update { estadoActual ->
-                    estadoActual.copy(
-                        mostrarAnimacionExito = true,
-                        loginExitoso = true
-                    )
+            try {
+                // La consulta a Room es casi instantánea; se espera también un mínimo
+                // de 700 ms para que la pantalla de carga se alcance a apreciar
+                val usuario = coroutineScope {
+                    val tiempoMinimo = async { delay(700) }
+                    val consulta = async {
+                        usuarioRepository.login(
+                            correo = _uiState.value.correo,
+                            contrasena = _uiState.value.contrasena
+                        )
+                    }
+                    tiempoMinimo.await()
+                    consulta.await()
                 }
-            } else {
+
+                if (usuario != null) {
+                    sessionManager.saveSession(
+                        id = usuario.id,
+                        nombre = usuario.nombre,
+                        correo = usuario.correo
+                    )
+                    _uiState.update { estadoActual ->
+                        estadoActual.copy(
+                            mostrarAnimacionExito = true,
+                            loginExitoso = true
+                        )
+                    }
+                } else {
+                    _uiState.update { estadoActual ->
+                        estadoActual.copy(
+                            mostrarModal = true,
+                            loginExitoso = false,
+                            errorGeneral = "Usuario o contraseña incorrectos"
+                        )
+                    }
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
                 _uiState.update { estadoActual ->
                     estadoActual.copy(
                         mostrarModal = true,
                         loginExitoso = false,
-                        errorGeneral = "Usuario o contraseña incorrectos"
+                        errorGeneral = "Ocurrió un error, intenta nuevamente"
                     )
+                }
+            } finally {
+                _uiState.update { estadoActual ->
+                    estadoActual.copy(estaCargando = false)
                 }
             }
         }

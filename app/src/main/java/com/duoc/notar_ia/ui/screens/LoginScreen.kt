@@ -187,8 +187,10 @@ fun LoginScreen(
 
                 Button(
                     onClick = { viewModel.onEnviar() },
-                    // Deshabilitado solo si el formulario está vacío
-                    enabled = uiState.correo.isNotBlank() && uiState.contrasena.isNotBlank(),
+                    // Deshabilitado si el formulario está vacío o si ya hay un login en curso
+                    enabled = uiState.correo.isNotBlank() &&
+                            uiState.contrasena.isNotBlank() &&
+                            !uiState.estaCargando,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
@@ -225,6 +227,10 @@ fun LoginScreen(
                     )
                 }
 
+            }
+
+            if (uiState.estaCargando) {
+                PantallaCargaLogin()
             }
 
             if (uiState.mostrarAnimacionExito) {

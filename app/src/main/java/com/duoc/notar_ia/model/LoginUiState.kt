@@ -11,7 +11,8 @@ data class LoginUiState(
     val mostrarModal: Boolean = false,
     val loginExitoso: Boolean = false,
     val intentoEnvio: Boolean = false, //Para no mostrar errores mientras la persona escribe
-    val mostrarAnimacionExito: Boolean = false
+    val mostrarAnimacionExito: Boolean = false,
+    val estaCargando: Boolean = false //Mientras se valida el usuario contra Room
 ){
     // formulario es válido cuando no hay error
     val formularioValido: Boolean
