@@ -212,7 +212,7 @@ Las rutas están definidas en `ui/navigation/AppNavigation.kt` (`object Routes`)
 
 Las dependencias para pruebas ya están configuradas en `build.gradle.kts` (`junit`, `androidx.junit`, Espresso y Compose Test).
 
-Se implementaron **4 pruebas unitarias** en `app/src/test/java/com/duoc/notar_ia/NotariaUnitTest.kt`:
+Se implementaron **7 pruebas unitarias** en `app/src/test/java/com/duoc/notar_ia/NotariaUnitTest.kt`:
 
 1. `hashContrasenaEsConsistente()` — el hash de `HashUtil` es determinista con la misma sal.
 2. `hashCambiaCuandoCambiaLaSal()` — sales distintas producen hashes distintos.
@@ -240,13 +240,13 @@ Para ejecutarlas:
 
 ## Estado frente a la rúbrica
 
-| Requisito | Estado | Detalle |
-|---|---|---|
-| Consumo de APIs externas (mín. 7, ≥1 GET y ≥1 POST) | Sí | 27 endpoints en Xano |
-| 2 recursos nativos (cámara, GPS, archivos o notificaciones) | Sí | Cámara + selector de archivos |
-| Pruebas unitarias (al menos 2) | Sí | 4 pruebas en `NotariaUnitTest.kt` |
-| Generación de APK firmado (release) | No | Falta generar el APK firmado |
-| Repositorio GIT actualizado | Sí | Commit y push realizados |
-| Tablero Trello actualizado | Pendiente | Falta marcar tarjetas |
-| Documentación técnica en README | Sí | Este documento |
-| APK con ícono personalizado | Parcial | Ícono corregido; falta el APK release |
+| Requisito | Estado | Detalle                               |
+|---|--------|---------------------------------------|
+| Consumo de APIs externas (mín. 7, ≥1 GET y ≥1 POST) | Sí     | 27 endpoints en Xano                  |
+| 2 recursos nativos (cámara, GPS, archivos o notificaciones) | Sí     | Cámara + selector de archivos         |
+| Pruebas unitarias (al menos 2) | Sí     | 7 pruebas en `NotariaUnitTest.kt`     |
+| Generación de APK firmado (release) | No     | Falta generar el APK firmado          |
+| Repositorio GIT actualizado | Sí     | Commit y push realizados              |
+| Tablero Trello actualizado | Sí     | Falta marcar tarjetas                 |
+| Documentación técnica en README | Sí     | Este documento                        |
+| APK con ícono personalizado | Sí     | Ícono corregido; falta el APK release |
