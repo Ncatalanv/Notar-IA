@@ -1,5 +1,6 @@
 package com.duoc.notar_ia.remote.dto.responses
 
+import com.duoc.notar_ia.remote.dto.UsuarioDto
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
