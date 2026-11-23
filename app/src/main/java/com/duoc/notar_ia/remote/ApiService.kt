@@ -1,6 +1,7 @@
 package com.duoc.notar_ia.remote
 
 import com.duoc.notar_ia.remote.dto.*
+import com.duoc.notar_ia.remote.dto.requests.*
 import com.duoc.notar_ia.remote.dto.responses.LoginResponse
 import com.duoc.notar_ia.remote.dto.responses.SignupResponse
 import retrofit2.http.*

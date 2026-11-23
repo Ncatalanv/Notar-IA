@@ -6,9 +6,6 @@ import com.duoc.notar_ia.model.LoginUiState
 import com.duoc.notar_ia.repository.UsuarioRepository
 import com.duoc.notar_ia.utils.SessionManager
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,7 +40,7 @@ class LoginViewModel(
         validar()
     }
 
-    // Botón "Ingresar" marca el intento, valida, y si está todo bien consulta Room
+    // Botón "Ingresar" marca el intento, valida, y si está todo bien consulta Xano
     fun onEnviar() {
         // Evita que un doble toque lance dos consultas mientras ya hay una en curso
         if (_uiState.value.estaCargando) return
@@ -66,41 +63,39 @@ class LoginViewModel(
 
         viewModelScope.launch {
             try {
-                // La consulta a Room es casi instantánea; se espera también un mínimo
-                // de 700 ms para que la pantalla de carga se alcance a apreciar
-                val usuario = coroutineScope {
-                    val tiempoMinimo = async { delay(700) }
-                    val consulta = async {
-                        usuarioRepository.login(
-                            correo = _uiState.value.correo,
-                            contrasena = _uiState.value.contrasena
-                        )
-                    }
-                    tiempoMinimo.await()
-                    consulta.await()
-                }
+                // Llamada a Xano (suspend, se ejecuta en segundo plano)
+                val resultado = usuarioRepository.login(
+                    correo = _uiState.value.correo,
+                    contrasena = _uiState.value.contrasena
+                )
 
-                if (usuario != null) {
-                    sessionManager.saveSession(
-                        id = usuario.id,
-                        nombre = usuario.nombre,
-                        correo = usuario.correo
-                    )
-                    _uiState.update { estadoActual ->
-                        estadoActual.copy(
-                            mostrarAnimacionExito = true,
-                            loginExitoso = true
+                resultado.fold(
+                    onSuccess = { loginResponse ->
+                        // Guarda el token JWT + datos del usuario en SessionManager
+                        sessionManager.saveSession(
+                            token = loginResponse.token!!,
+                            id = loginResponse.usuario!!.id,
+                            nombre = loginResponse.usuario.nombre,
+                            correo = loginResponse.usuario.correo
                         )
+
+                        _uiState.update { estadoActual ->
+                            estadoActual.copy(
+                                mostrarAnimacionExito = true,
+                                loginExitoso = true
+                            )
+                        }
+                    },
+                    onFailure = { error ->
+                        _uiState.update { estadoActual ->
+                            estadoActual.copy(
+                                mostrarModal = true,
+                                loginExitoso = false,
+                                errorGeneral = error.message ?: "Usuario o contraseña incorrectos"
+                            )
+                        }
                     }
-                } else {
-                    _uiState.update { estadoActual ->
-                        estadoActual.copy(
-                            mostrarModal = true,
-                            loginExitoso = false,
-                            errorGeneral = "Usuario o contraseña incorrectos"
-                        )
-                    }
-                }
+                )
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

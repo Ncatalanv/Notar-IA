@@ -12,15 +12,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val application = application as NotariaApplication
-        val usuarioRepository = application.usuarioRepository
-        val sessionManager = application.sessionManager
+        val app = application as NotariaApplication
 
         setContent {
             NotariaTheme {
                 AppNavigation(
-                    usuarioRepository = usuarioRepository,
-                    sessionManager = sessionManager
+                    usuarioRepository = app.usuarioRepository,
+                    sessionManager = app.sessionManager
                 )
             }
         }

@@ -16,12 +16,13 @@ class SessionManager(context: Context){
         private const val KEY_USUARIO_ID = "usuario_id"
         private const val KEY_USUARIO_NOMBRE = "usuario_nombre"
         private const val KEY_USUARIO_CORREO = "usuario_correo"
+        private const val KEY_TOKEN = "jwt_token"
     }
 
     //Guarda los datos de la sesión
-    fun saveSession(id: Int, nombre: String, correo: String){
+    fun saveSession(token: String, id: Int, nombre: String, correo: String) {
         prefs.edit().apply {
-            putBoolean(KEY_SESION_ACTIVA, true)
+            putString(KEY_TOKEN, token)           // guarda el JWT
             putInt(KEY_USUARIO_ID, id)
             putString(KEY_USUARIO_NOMBRE, nombre)
             putString(KEY_USUARIO_CORREO, correo)
@@ -29,9 +30,8 @@ class SessionManager(context: Context){
         }
     }
 
-    fun isLoggedIn(): Boolean{
-        return prefs.getBoolean(KEY_SESION_ACTIVA, false)
-    }
+    //Verificación del token
+    fun isLoggedIn(): Boolean = getToken() != null
 
     fun getUserName(): String{
         return prefs.getString(KEY_USUARIO_NOMBRE, "") ?: ""
@@ -52,5 +52,8 @@ class SessionManager(context: Context){
         }
     }
 
+    //Función para obtener el token
+    fun getToken(): String? = prefs.getString(KEY_TOKEN, null)
 
 }
+
